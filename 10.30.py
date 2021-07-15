@@ -1,3 +1,54 @@
+def num(total):
+    ans = total[0] + float(deck.pop(0))
+    total.insert(0,ans)
+    total.pop(1)
+    return total
+
+def num1(com):
+    ans = com[0] + float(deck.pop(0))
+    com.insert(0,ans)
+    com.pop(1)
+    com1 = com[0]
+    return com
+
+def rule(com1):
+    shuffle(chance_big)
+    shuffle(chance_mini)
+    shuffle(chance_small)
+    if com[0] + 9 <= 10.5:
+        num(com)
+    elif com[0] < 3:
+        num(com)
+    elif com[0] > 3 and com[0] < 5:
+        if chance_small[0] == "a":
+            num(com)
+        else:
+            finall.insert(0,"5")
+    elif com[0] > 5 and com[0] < 8:
+        if chance_small[0] == "b":
+            num(com)
+        if chance_small[0] == "a":
+            finall.insert(0,"5")
+    elif com[0] <= 10.5:
+        print(float(com[0]),"點",",","結束這個回合")
+        if total[0] > com[0]:
+            com[0] = 0
+            print("你贏了")
+            lose_com.append(fiftwo-len(deck)-lose[-1])
+            print("\n","我有",lose_com[-1],"張牌","\n")
+        elif total[0] < com[0]:
+            com[0] = 0
+            print("你輸了")
+            lose.append(fiftwo-len(deck)-lose_com[-1])
+            print("\n","你有",lose[-1],"張牌","\n")
+        elif total[0] == com[0]:
+            com[0] = 0
+            fiftwo - (max(lose[-1],lose_com[-1]) - len(deck))
+            print("平手啦")
+        finall.insert(0,"5")
+    return com1
+
+
 from random import shuffle
 order = ["A","A","A","A", "2", "2", "2","2", "3", "3", "3","3", "4","4", "4", "4","5","5","5" ,"5","6","6","6", "6","7","7","7", "7","8","8","8", "8", "9", "9", "9","9","10","10","10", "10","j","j","j", "j","q","q","q", "q","k","k","k", "k"]
 deck = []
@@ -17,11 +68,6 @@ for o in range(0,52):
         deck[o] = 0.5
     if deck[o] == "A":
         deck[o] = 1
-def num(total):
-    ans = total[0] + float(deck.pop(0))
-    total.insert(0,ans)
-    total.pop(1)
-    return total
 while len(deck) > 0:
     next = "" 
     total = [0]
@@ -34,6 +80,8 @@ while len(deck) > 0:
             print("輸錯")
             next = input("是否要下一張(是/否):")
         if len(deck) == 0:
+            lose_com.append(fiftwo-len(deck)-lose[-1])
+            print("\n","我有",lose_com[-1],"張牌","\n")
             break
         if next == "否":
             break
@@ -45,56 +93,27 @@ while len(deck) > 0:
             break
 
 
-
-    print("\n","俺のターン","\0","ドロー!","\n")
+    if len(deck) == 0:
+        print("\n","俺のターン","\0","ドロー!","\n","阿怎麼沒牌了!?","\n")
+    else:
+        print("\n","俺のターン","\0","ドロー!","\n")
+    if len(deck) == 0:
+        lose_com.append(fiftwo-len(deck)-lose[-1])
+        print("\n","我有",lose_com[-1],"張牌","\n")
+        break
     finall = [0]
+    chance_big = ["a","a","b"]
     chance_small = ["a","a","a","a","b"]
+    chance_mini = ["a","a","a","a","a","a","a","a","a","b"]
     com = [0]
     com1 = 0
-    def num1(com):
-        ans = com[0] + float(deck.pop(0))
-        com.insert(0,ans)
-        com.pop(1)
-        com1 = com[0]
-        return com
-    def rule(com1):
-        if com[0] + 9 <= 10.5:
-            num(com)
-        elif com[0] < 5:
-            shuffle(chance_small)
-            if chance_small[0] == "a":
-                num(com)
-            if chance_small[0] == "b":
-                finall.insert(0,"5")
-        elif com[0] > 5 and com[0] < 8:
-            shuffle(chance_small)
-            if chance_small[0] == "b":
-                num(com)
-            if chance_small[0] == "a":
-                finall.insert(0,"5")
-        elif com[0] <= 10.5:
-            print(float(com[0]),"點",",","結束這個回合")
-            if total[0] > com[0]:
-                com[0] = 0
-                print("你贏了")
-                lose_com.append(fiftwo-len(deck)-lose[-1])
-                print("\n","我有",lose_com[-1],"張牌","\n")
-            elif total[0] < com[0]:
-                com[0] = 0
-                print("你輸了")
-                lose.append(fiftwo-len(deck)-lose_com[-1])
-                print("\n","你有",lose[-1],"張牌","\n")
-            elif total[0] == com[0]:
-                com[0] = 0
-                fiftwo - (max(lose[-1],lose_com[-1]) - len(deck))
-                print("平手啦")
-            finall.insert(0,"5")
-        return com1
     while finall[0] == 0:
         print("目前是:",rule(com[0]),"點","\n")
         if len(finall) == 1:
             print("我抽到",number.pop(0))
         if len(deck) == 0:
+            lose_com.append(fiftwo-len(deck)-lose[-1])
+            print("\n","我有",lose_com[-1],"張牌","\n")
             break
         if com[0] > 10.5:
             print("目前是:",com[0],"點")
