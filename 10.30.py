@@ -1,36 +1,43 @@
+#玩家抽牌
 def num(total):
     ans = total[0] + float(deck.pop(0))
     total.insert(0,ans)
     total.pop(1)
     return total
-
+#電腦抽牌
 def num1(com):
     ans = com[0] + float(deck.pop(0))
     com.insert(0,ans)
     com.pop(1)
     com1 = com[0]
     return com
-
+#電腦偵測是否要再一張牌
 def rule(com1):
     shuffle(chance_big)
     shuffle(chance_mini)
     shuffle(chance_small)
+    #總點數為 0.5 時抽牌
     if com[0] + 9 <= 10.5:
         num(com)
+    #總點數 < 3時抽牌
     elif com[0] < 3:
         num(com)
-    elif com[0] > 3 and com[0] < 5:
-        if chance_small[0] == "a":
+    #總點數 3~6 時有90%的機率抽牌 否則結束回合
+    elif com[0] > 3 and com[0] < 6:
+        if chance_mini[0] == "a":
             num(com)
         else:
             finall.insert(0,"5")
-    elif com[0] > 5 and com[0] < 8:
+    #總點數 6~7 時有20%的機率抽牌 否則結束回合
+    elif com[0] > 6 and com[0] < 7:
         if chance_small[0] == "b":
             num(com)
         if chance_small[0] == "a":
             finall.insert(0,"5")
+    #當總點數 > 7 時  不抽牌
     elif com[0] <= 10.5:
         print(float(com[0]),"點",",","結束這個回合")
+    #判斷誰贏
         if total[0] > com[0]:
             com[0] = 0
             print("你贏了")
@@ -58,6 +65,7 @@ finall = [0]
 lose = [0]
 lose_com = [0]
 fiftwo = 52
+#洗牌
 for j in order:
     number.append(j)
     shuffle(number)
